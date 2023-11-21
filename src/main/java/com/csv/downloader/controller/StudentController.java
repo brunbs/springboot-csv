@@ -4,6 +4,7 @@ import com.csv.downloader.domain.response.StudentResponse;
 import com.csv.downloader.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +23,12 @@ public class StudentController {
     @Operation(summary = "list all students")
     ResponseEntity<List<StudentResponse>> getAllStudents() {
         return ResponseEntity.ok().body(studentService.getStudents());
+    }
+
+    @GetMapping("download")
+    @Operation(summary = "download a csv with all students info")
+    void getStudentsCSVReport(HttpServletResponse response) {
+        studentService.getStudentsCSV(response);
     }
 
 }
